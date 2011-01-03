@@ -1,13 +1,13 @@
 --- !ruby/object:Gem::Specification 
 name: timelord
 version: !ruby/object:Gem::Version 
-  hash: 29
+  hash: 27
   prerelease: false
   segments: 
   - 0
   - 0
-  - 1
-  version: 0.0.1
+  - 2
+  version: 0.0.2
 platform: ruby
 authors: 
 - Matthew Mongeau
@@ -15,7 +15,7 @@ autorequire:
 bindir: bin
 cert_chain: []
 
-date: 2011-01-02 00:00:00 -05:00
+date: 2011-01-03 00:00:00 -05:00
 default_executable: 
 dependencies: []
 
