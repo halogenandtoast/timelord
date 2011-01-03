@@ -8,6 +8,13 @@ class Timelord
   DAY_NAMES = %w(monday tuesday wednesday thursday friday saturday sunday).freeze
   DAY_MATCHER = DAY_NAMES.join('|').freeze
 
+  # Parses a date str. Second parameter switches between international and american date formats.
+  #
+  #   Timelord.parse("Tuesday").to_s # "2011-01-04"
+  #   Timelord.parse("11/01").to_s # "2011-01-11"
+  #   Timelord.parse("11/01", :american) # "2011-11-01"
+  #
+  # For more examples, check out the spec[https://github.com/halogenandtoast/timelord/blob/master/spec/timelord_spec.rb]
   def self.parse(str, format = :international)
     today = Date.today
     if str =~ /(\d{4})\/(\d{1,2})\/(\d{1,2})/i
