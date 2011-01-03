@@ -1,0 +1,75 @@
+require 'date'
+
+class Timelord
+
+  SHORT_MONTHS = %w(jan feb mar apr may jun jul aug sep oct nov dec).freeze
+  SHORT_MATCHER = SHORT_MONTHS.join('|').freeze
+  ORDINAL_MATCHER = "st|nd|rd|th".freeze
+  DAY_NAMES = %w(monday tuesday wednesday thursday friday saturday sunday).freeze
+  DAY_MATCHER = DAY_NAMES.join('|').freeze
+
+  def self.parse(str, format = :international)
+    today = Date.today
+    if str =~ /(\d{4})\/(\d{1,2})\/(\d{1,2})/i
+      Date.civil($1.to_i, $2.to_i, $3.to_i)
+    elsif str =~ /(\d{4})\-(\d{1,2})\-(\d{1,2})/i
+      Date.civil($1.to_i, $2.to_i, $3.to_i)
+    elsif str =~ /(\d{1,2})\/(\d{1,2})\/(\d{2}(\d{2})?)/i
+      if format == :american
+        Date.civil($3.to_i, $1.to_i, $2.to_i)
+      else
+        Date.civil($3.to_i, $2.to_i, $1.to_i)
+      end
+    elsif str =~ /(\d{1,2})\/(\d{1,2})/i
+      date = if format == :american
+        Date.civil(today.year, $1.to_i, $2.to_i)
+      else
+        Date.civil(today.year, $2.to_i, $1.to_i)
+      end
+      set_to_future(date)
+    elsif str =~ /(\d{1,2})\s+(#{SHORT_MATCHER})/i
+      date = Date.civil(today.year, SHORT_MONTHS.index($2.downcase) + 1, $1.to_i)
+      set_to_future(date)
+    elsif str =~ /(#{SHORT_MATCHER})\s+(\d{1,2})/i
+      date = Date.civil(today.year, SHORT_MONTHS.index($1.downcase) + 1, $2.to_i)
+      set_to_future(date)
+    elsif str =~ /(\d{1,2})(#{ORDINAL_MATCHER})/i
+      date = Date.civil(today.year, today.month, $1.to_i)
+      set_to_future(date)
+    elsif str =~/next (#{DAY_MATCHER})/i
+      current_date = today.strftime("%A").downcase
+      current_index = DAY_NAMES.index(current_date)
+      expected_index = DAY_NAMES.index($1.downcase)
+      if expected_index <= current_index
+        today + (7 - current_index + expected_index) + 7
+      else
+        diff = expected_index - current_index
+        today + diff + 7
+      end
+    elsif str =~/(#{DAY_MATCHER})/i
+      current_date = today.strftime("%A").downcase
+      current_index = DAY_NAMES.index(current_date)
+      expected_index = DAY_NAMES.index($1.downcase)
+      if expected_index <= current_index
+        today + (7 - current_index + expected_index)
+      else
+        diff = expected_index - current_index
+        today + diff
+      end
+    elsif str =~ /today/i
+      today
+    elsif str =~ /tomorrow/i
+      today + 1
+    end
+  end
+
+  private
+
+  def self.set_to_future(date)
+    today = Date.today
+    if date && date < today
+      date = Date.civil(date.year + 1, date.month, date.day)
+    end
+    return date
+  end
+end
