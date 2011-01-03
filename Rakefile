@@ -14,7 +14,7 @@ PKG_FILES = %w(Rakefile) + Dir.glob("{lib}/**/*")
 
 gem_spec = Gem::Specification.new do |spec|
   spec.name = 'timelord'
-  spec.version = '0.0.2'
+  spec.version = '0.0.3'
   spec.summary = 'Pull dates out of strings'
   spec.description = 'Pull dates out of strings.'
   spec.email = 'halogenandtoast@gmail.com'
