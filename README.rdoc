@@ -7,6 +7,7 @@ will return a date object for the upcoming Tuesday.
 
   require 'timelord'
   Timelord.parse("Tuesday").to_s # "2011-01-04"
+  Timelord.parse("On Tuesday go for a walk").to_s # "2011-01-04"
 
 For more examples, check out the spec[https://github.com/halogenandtoast/timelord/blob/master/spec/timelord_spec.rb]
 
