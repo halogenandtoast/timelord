@@ -14,9 +14,18 @@ describe Timelord, 'parse' do
     Timelord.parse("I need to do something today.").should == Date.today
   end
 
+  it "parses 'tod'" do
+    Timelord.parse("I need to do something tod.").should == Date.today
+  end
+
   it "parses 'tomorrow'" do
     tomorrow = Date.today + 1
     Timelord.parse("I need to do something tomorrow.").should == tomorrow
+  end
+
+  it "parses 'tom'" do
+    tomorrow = Date.today + 1
+    Timelord.parse("I need to do something tom.").should == tomorrow
   end
 
   it "parses '12 Dec'" do
@@ -83,8 +92,14 @@ describe Timelord, 'parse' do
   it "parses the day of the week" do
     friday = Date.today + 2
     monday = Date.today + 5
+    tuesday = Date.today + 6
+    thursday = Date.today + 1
     Timelord.parse("On friday do something").should == friday
     Timelord.parse("On Monday do something").should == monday
+    Timelord.parse("On fri do something").should == friday
+    Timelord.parse("On mon do something").should == monday
+    Timelord.parse("On tues do something").should == tuesday
+    Timelord.parse("On thurs do something").should == thursday
   end
 
   it "parses the next weekday" do

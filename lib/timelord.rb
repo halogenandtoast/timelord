@@ -6,7 +6,8 @@ class Timelord
   SHORT_MATCHER = SHORT_MONTHS.join('|').freeze
   ORDINAL_MATCHER = "st|nd|rd|th".freeze
   DAY_NAMES = %w(monday tuesday wednesday thursday friday saturday sunday).freeze
-  DAY_MATCHER = DAY_NAMES.join('|').freeze
+  SHORT_DAY_NAMES = %w(mon tue wed thu fri sat sun).freeze
+  DAY_MATCHER = (DAY_NAMES + SHORT_DAY_NAMES).join('|').freeze
 
   # Parses a date str. Second parameter switches between international and american date formats.
   #
@@ -44,33 +45,53 @@ class Timelord
       date = Date.civil(today.year, today.month, $1.to_i)
       set_to_future(date)
     elsif str =~/next (#{DAY_MATCHER})/i
-      current_date = today.strftime("%A").downcase
-      current_index = DAY_NAMES.index(current_date)
-      expected_index = DAY_NAMES.index($1.downcase)
-      if expected_index <= current_index
-        today + (7 - current_index + expected_index) + 7
-      else
-        diff = expected_index - current_index
-        today + diff + 7
-      end
+      expected_index = DAY_NAMES.index($1.downcase) || SHORT_DAY_NAMES.index($1.downcase)
+      next_weekday(expected_index)
+    elsif str =~/next tues/
+      next_weekday(DAY_NAMES.index("tue"))
+    elsif str =~/next (thur|thurs)/
+      next_weekday(DAY_NAMES.index("tue"))
     elsif str =~/(#{DAY_MATCHER})/i
-      current_date = today.strftime("%A").downcase
-      current_index = DAY_NAMES.index(current_date)
-      expected_index = DAY_NAMES.index($1.downcase)
-      if expected_index <= current_index
-        today + (7 - current_index + expected_index)
-      else
-        diff = expected_index - current_index
-        today + diff
-      end
-    elsif str =~ /today/i
+      expected_index = DAY_NAMES.index($1.downcase) || SHORT_DAY_NAMES.index($1.downcase)
+      current_weekday(expected_index)
+    elsif str =~/tues/
+      current_weekday(DAY_NAMES.index("tue"))
+    elsif str =~/(thur|thurs)/
+      current_weekday(DAY_NAMES.index("tue"))
+    elsif str =~ /(today|tod)/i
       today
-    elsif str =~ /tomorrow/i
+    elsif str =~ /(tomorrow|tom)/i
       today + 1
     end
   end
 
   private
+
+  def self.today
+    Date.today
+  end
+
+  def self.next_weekday(date_index)
+    current_date = today.strftime("%A").downcase
+    current_index = DAY_NAMES.index(current_date)
+    if date_index <= current_index
+      today + (7 - current_index + date_index) + 7
+    else
+      diff = date_index - current_index
+      today + diff + 7
+    end
+  end
+
+  def self.current_weekday(date_index)
+    current_date = today.strftime("%A").downcase
+    current_index = DAY_NAMES.index(current_date)
+    if date_index <= current_index
+      today + (7 - current_index + date_index)
+    else
+      diff = date_index - current_index
+      today + diff
+    end
+  end
 
   def self.set_to_future(date)
     today = Date.today
