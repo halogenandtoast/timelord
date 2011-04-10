@@ -8,7 +8,7 @@ $LOAD_PATH << File.join(File.dirname(__FILE__), 'lib')
 
 Gem::Specification.new do |s|
   s.name = "timelord"
-  s.version = '0.0.4'
+  s.version = '0.0.5'
   s.authors = ["Matthew Mongeau"]
   s.email = "halogenandtoast@gmail.com"
   s.files = include_files
