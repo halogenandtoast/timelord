@@ -1,6 +1,7 @@
 source :rubygems
 group :test do
   gem 'timecop'
-  gem 'rspec', '1.3.1'
+  gem 'rspec'
   gem 'rake'
+  gem 'ruby-debug'
 end

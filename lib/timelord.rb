@@ -18,49 +18,49 @@ class Timelord
   # For more examples, check out the spec[https://github.com/halogenandtoast/timelord/blob/master/spec/timelord_spec.rb]
   def self.parse(str, format = :international)
     today = Date.today
-    if str =~ /(\d{4})\/(\d{1,2})\/(\d{1,2})/i
+    if str =~ /\b(\d{4})\/(\d{1,2})\/(\d{1,2})\b/i
       Date.civil($1.to_i, $2.to_i, $3.to_i)
-    elsif str =~ /(\d{4})\-(\d{1,2})\-(\d{1,2})/i
+    elsif str =~ /\b(\d{4})\-(\d{1,2})\-(\d{1,2})\b/i
       Date.civil($1.to_i, $2.to_i, $3.to_i)
-    elsif str =~ /(\d{1,2})\/(\d{1,2})\/(\d{2}(\d{2})?)/i
+    elsif str =~ /\b(\d{1,2})\/(\d{1,2})\/(\d{2}(\d{2})?)\b/i
       if format == :american
         Date.civil($3.to_i, $1.to_i, $2.to_i)
       else
         Date.civil($3.to_i, $2.to_i, $1.to_i)
       end
-    elsif str =~ /(\d{1,2})\/(\d{1,2})/i
+    elsif str =~ /\b(\d{1,2})\/(\d{1,2})\b/i
       date = if format == :american
         Date.civil(today.year, $1.to_i, $2.to_i)
       else
         Date.civil(today.year, $2.to_i, $1.to_i)
       end
       set_to_future(date)
-    elsif str =~ /(\d{1,2})\s+(#{SHORT_MATCHER})/i
+    elsif str =~ /\b(\d{1,2})\s+(#{SHORT_MATCHER})\b/i
       date = Date.civil(today.year, SHORT_MONTHS.index($2.downcase) + 1, $1.to_i)
       set_to_future(date)
-    elsif str =~ /(#{SHORT_MATCHER})\s+(\d{1,2})/i
+    elsif str =~ /\b(#{SHORT_MATCHER})\s+(\d{1,2})\b/i
       date = Date.civil(today.year, SHORT_MONTHS.index($1.downcase) + 1, $2.to_i)
       set_to_future(date)
-    elsif str =~ /(\d{1,2})(#{ORDINAL_MATCHER})/i
+    elsif str =~ /\b(\d{1,2})(#{ORDINAL_MATCHER})\b/i
       date = Date.civil(today.year, today.month, $1.to_i)
       set_to_future(date)
-    elsif str =~/next (#{DAY_MATCHER})/i
+    elsif str =~/\bnext (#{DAY_MATCHER})\b/i
       expected_index = DAY_NAMES.index($1.downcase) || SHORT_DAY_NAMES.index($1.downcase)
       next_weekday(expected_index)
-    elsif str =~/next tues/
-      next_weekday(DAY_NAMES.index("tue"))
-    elsif str =~/next (thur|thurs)/
-      next_weekday(DAY_NAMES.index("tue"))
-    elsif str =~/(#{DAY_MATCHER})/i
+    elsif str =~/\bnext tues\b/
+      next_weekday(DAY_NAMES.index("tuesday"))
+    elsif str =~/\bnext (thur|thurs)\b/
+      next_weekday(DAY_NAMES.index("thursday"))
+    elsif str =~/\b(#{DAY_MATCHER})\b/i
       expected_index = DAY_NAMES.index($1.downcase) || SHORT_DAY_NAMES.index($1.downcase)
       current_weekday(expected_index)
-    elsif str =~/tues/
-      current_weekday(DAY_NAMES.index("tue"))
-    elsif str =~/(thur|thurs)/
-      current_weekday(DAY_NAMES.index("tue"))
-    elsif str =~ /(today|tod)/i
+    elsif str =~/\btues\b/
+      current_weekday(DAY_NAMES.index("tuesday"))
+    elsif str =~/\b(thur|thurs)\b/
+      current_weekday(DAY_NAMES.index("thursday"))
+    elsif str =~ /\b(today|tod)\b/i
       today
-    elsif str =~ /(tomorrow|tom)/i
+    elsif str =~ /\b(tomorrow|tom)\b/i
       today + 1
     end
   end

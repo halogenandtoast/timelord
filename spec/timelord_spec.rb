@@ -28,6 +28,10 @@ describe Timelord, 'parse' do
     Timelord.parse("I need to do something tom.").should == tomorrow
   end
 
+  it "does not parse 'monster' as monday" do
+    Timelord.parse("Monster mash").should == nil
+  end
+
   it "parses '12 Dec'" do
     twelth_of_december = Date.civil(2010,12,12)
     Timelord.parse("On 12 Dec I need to do something.").should == twelth_of_december
