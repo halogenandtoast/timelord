@@ -3,7 +3,9 @@ require 'date'
 class Timelord
 
   SHORT_MONTHS = %w(jan feb mar apr may jun jul aug sep oct nov dec).freeze
+  LONG_MONTHS = %w(january febuary march april may june july august september october november december).freeze
   SHORT_MATCHER = SHORT_MONTHS.join('|').freeze
+  LONG_MATCHER = LONG_MONTHS.join('|').freeze
   ORDINAL_MATCHER = "st|nd|rd|th".freeze
   DAY_NAMES = %w(monday tuesday wednesday thursday friday saturday sunday).freeze
   SHORT_DAY_NAMES = %w(mon tue wed thu fri sat sun).freeze
@@ -40,6 +42,12 @@ class Timelord
       set_to_future(date)
     elsif str =~ /\b(#{SHORT_MATCHER})\s+(\d{1,2})\b/i
       date = Date.civil(today.year, SHORT_MONTHS.index($1.downcase) + 1, $2.to_i)
+      set_to_future(date)
+    elsif str =~ /\b(\d{1,2})\s+(#{LONG_MATCHER})\b/i
+      date = Date.civil(today.year, LONG_MONTHS.index($2.downcase) + 1, $1.to_i)
+      set_to_future(date)
+    elsif str =~ /\b(#{LONG_MATCHER})\s+(\d{1,2})\b/i
+      date = Date.civil(today.year, LONG_MONTHS.index($1.downcase) + 1, $2.to_i)
       set_to_future(date)
     elsif str =~ /\b(\d{1,2})(#{ORDINAL_MATCHER})\b/i
       date = Date.civil(today.year, today.month, $1.to_i)

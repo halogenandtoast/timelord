@@ -118,6 +118,11 @@ describe Timelord, 'parse' do
     Timelord.parse("On 1 Jan I need to do something.").should == first_of_january
   end
 
+  it 'parses month_name day format' do
+    first_of_march = Date.civil(2011,3,1)
+    Timelord.parse("March 1 I need to do stuff.").should == first_of_march
+  end
+
   after do
     Timecop.return
   end

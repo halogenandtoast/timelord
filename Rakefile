@@ -1,12 +1,13 @@
+require 'bundler/setup'
 require 'rake'
-require 'spec/rake/spectask'
+require 'rspec/core/rake_task'
 require 'rake/rdoctask'
 require 'rake/gempackagetask'
 
 specification = Gem::Specification.load("timelord.gemspec")
 
-Spec::Rake::SpecTask.new do |t|
-  t.spec_files = FileList['spec/**/*_spec.rb']
+RSpec::Core::RakeTask.new do |t|
+  t.pattern = FileList['spec/**/*_spec.rb']
 end
 
 Rake::GemPackageTask.new(specification) do |package|
