@@ -1,8 +1,7 @@
-require 'bundler/setup'
-require 'rake'
+require 'bundler'
+require 'rdoc/task'
+require 'rubygems/package_task'
 require 'rspec/core/rake_task'
-require 'rake/rdoctask'
-require 'rake/gempackagetask'
 
 specification = Gem::Specification.load("timelord.gemspec")
 
@@ -10,17 +9,17 @@ RSpec::Core::RakeTask.new do |t|
   t.pattern = FileList['spec/**/*_spec.rb']
 end
 
-Rake::GemPackageTask.new(specification) do |package|
-  package.need_zip = true
-  package.need_tar = true
-end
-
-Rake::RDocTask.new(:rdoc) do |rdoc|
+RDoc::Task.new(:rdoc) do |rdoc|
   rdoc.rdoc_dir = 'doc'
   rdoc.title    = 'Timelord'
   rdoc.options << '--line-numbers' << '--inline-source'
   rdoc.rdoc_files.include('README*')
   rdoc.rdoc_files.include('lib/**/*.rb')
+end
+
+Gem::PackageTask.new(specification) do |pkg|
+  pkg.need_zip = false
+  pkg.need_tar = false
 end
 
 task :default => [:test]

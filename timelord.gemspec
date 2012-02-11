@@ -5,10 +5,11 @@ include_files = ["README*", "LICENSE", "Rakefile", "{lib,spec}/**/*"].map do |gl
 end.flatten
 
 $LOAD_PATH << File.join(File.dirname(__FILE__), 'lib')
+require 'timelord'
 
 Gem::Specification.new do |s|
   s.name = "timelord"
-  s.version = '0.0.5'
+  s.version = Timelord::VERSION
   s.authors = ["Matthew Mongeau"]
   s.email = "halogenandtoast@gmail.com"
   s.files = include_files

@@ -1,6 +1,7 @@
 require 'date'
 
 class Timelord
+  VERSION = "0.0.6"
 
   SHORT_MONTHS = %w(jan feb mar apr may jun jul aug sep oct nov dec).freeze
   LONG_MONTHS = %w(january febuary march april may june july august september october november december).freeze
