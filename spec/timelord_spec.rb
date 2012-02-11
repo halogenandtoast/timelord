@@ -6,6 +6,13 @@ describe Timelord, 'parse' do
     Timecop.freeze(local_time)
   end
 
+  it "can set today to a different value" do
+    actual_date = Time.local(2010,12,5,10,5,0)
+    Timelord.set_date(actual_date)
+    Timelord.parse("today").should == actual_date
+    Timelord.set_date(Date.today)
+  end
+
   it "returns nil when no time is present" do
     Timelord.parse("No time here").should == nil
   end

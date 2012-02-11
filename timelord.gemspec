@@ -15,4 +15,8 @@ Gem::Specification.new do |s|
   s.homepage = "http://github.com/halogenandtoast/timelord"
   s.require_path = "lib"
   s.summary = "Pull dates out of strings"
+
+  s.add_development_dependency "timecop"
+  s.add_development_dependency "rspec"
+  s.add_development_dependency "rake"
 end

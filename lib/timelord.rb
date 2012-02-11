@@ -11,6 +11,18 @@ class Timelord
   SHORT_DAY_NAMES = %w(mon tue wed thu fri sat sun).freeze
   DAY_MATCHER = (DAY_NAMES + SHORT_DAY_NAMES).join('|').freeze
 
+  def self.set_date(date)
+    @today = date
+  end
+
+  def self.today
+    @today ||= Date.today
+  end
+
+  def self.reset
+    @today = Date.today
+  end
+
   # Parses a date str. Second parameter switches between international and american date formats.
   #
   #   Timelord.parse("Tuesday").to_s # "2011-01-04"
@@ -19,7 +31,6 @@ class Timelord
   #
   # For more examples, check out the spec[https://github.com/halogenandtoast/timelord/blob/master/spec/timelord_spec.rb]
   def self.parse(str, format = :international)
-    today = Date.today
     if str =~ /\b(\d{4})\/(\d{1,2})\/(\d{1,2})\b/i
       Date.civil($1.to_i, $2.to_i, $3.to_i)
     elsif str =~ /\b(\d{4})\-(\d{1,2})\-(\d{1,2})\b/i
@@ -74,10 +85,6 @@ class Timelord
   end
 
   private
-
-  def self.today
-    Date.today
-  end
 
   def self.next_weekday(date_index)
     current_date = today.strftime("%A").downcase
