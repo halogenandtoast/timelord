@@ -7,8 +7,7 @@ require 'timelord/current_weekday'
 require 'timelord/matcher_loader'
 
 class Timelord
-  VERSION = "0.0.6"
-
+  VERSION = "0.0.7"
 
   def self.set_date(date)
     @today = date
