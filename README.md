@@ -1,5 +1,6 @@
 # Timelord
 [![Code Climate](https://codeclimate.com/github/halogenandtoast/timelord.png)](https://codeclimate.com/github/halogenandtoast/timelord)
+[![Build Status](https://travis-ci.org/halogenandtoast/timelord.svg?branch=mm-matchers)](https://travis-ci.org/halogenandtoast/timelord)
 
 Timelord parses dates out of strings. The string itself can contain non-date text - for instance: "Call Matt on Tuesday"
 will return a date object for the upcoming Tuesday.
