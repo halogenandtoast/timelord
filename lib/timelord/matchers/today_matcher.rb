@@ -1,7 +1,9 @@
-class TodayMatcher < Matcher
-  REGEX = /\b(today|tod)\b/i
+module Timelord
+  class TodayMatcher < Matcher
+    REGEX = /\b(today|tod)\b/i
 
-  def to_date
-    today
+    def to_date
+      today
+    end
   end
 end

@@ -1,13 +1,15 @@
-class CurrentTuesdayMatcher < Matcher
-  REGEX = /\btues\b/
+module Timelord
+  class CurrentTuesdayMatcher < Matcher
+    REGEX = /\btues\b/
 
-  def to_date
-    CurrentWeekday.new(date_index, today).to_date
-  end
+      def to_date
+        CurrentWeekday.new(date_index, today).to_date
+      end
 
-  private
+    private
 
-  def date_index
-    DAY_NAMES.index("tuesday")
+    def date_index
+      DAY_NAMES.index("tuesday")
+    end
   end
 end

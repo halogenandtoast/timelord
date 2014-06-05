@@ -8,9 +8,7 @@ describe Timelord, 'parse' do
 
   it "can set today to a different value" do
     actual_date = Time.local(2010,12,5,10,5,0)
-    Timelord.set_date(actual_date)
-    Timelord.parse("today").should == actual_date
-    Timelord.set_date(Date.today)
+    Timelord.parse("today", today: actual_date).should == actual_date
   end
 
   it "returns nil when no time is present" do
@@ -51,12 +49,12 @@ describe Timelord, 'parse' do
 
   it "parses American style dates" do
     first_of_december = Date.today
-    Timelord.parse("On 12/1/2010 I need to do something.", :american).should == first_of_december
+    Timelord.parse("On 12/1/2010 I need to do something.", format: :american).should == first_of_december
   end
 
   it "parses Internation style dates by default" do
     first_of_december = Date.today
-    Timelord.parse("On 1/12/2010 I need to do something.", :international).should == first_of_december
+    Timelord.parse("On 1/12/2010 I need to do something.", format: :international).should == first_of_december
   end
 
   it "parses yyyy/mm/dd" do
@@ -81,10 +79,10 @@ describe Timelord, 'parse' do
 
   it "parses mm/dd" do
     first_of_december = Date.today
-    Timelord.parse("On 12/1 I need to do something.", :american).should == first_of_december
-    Timelord.parse("On 12/01 I need to do something.", :american).should == first_of_december
-    Timelord.parse("On 1/12 I need to do something.", :international).should == first_of_december
-    Timelord.parse("On 01/12 I need to do something.", :international).should == first_of_december
+    Timelord.parse("On 12/1 I need to do something.", format: :american).should == first_of_december
+    Timelord.parse("On 12/01 I need to do something.", format: :american).should == first_of_december
+    Timelord.parse("On 1/12 I need to do something.", format: :international).should == first_of_december
+    Timelord.parse("On 01/12 I need to do something.", format: :international).should == first_of_december
   end
 
   it "parses formats like 1st,2nd,3rd,4th,25th" do

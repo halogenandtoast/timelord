@@ -1,4 +1,5 @@
 require 'date'
+require 'timelord/time_parser'
 require 'timelord/matcher'
 require 'timelord/no_matcher'
 require 'timelord/future'
@@ -6,24 +7,8 @@ require 'timelord/next_weekday'
 require 'timelord/current_weekday'
 require 'timelord/matcher_loader'
 
-class Timelord
-  VERSION = "0.0.7"
-
-  def self.set_date(date)
-    @today = date
-  end
-
-  def self.today
-    @today ||= Date.today
-  end
-
-  def self.reset
-    @today = Date.today
-  end
-
-  def self.matchers
-    @matchers ||= MatcherLoader.new.load_all
-  end
+module Timelord
+  VERSION = "0.0.8"
 
   # Parses a date str. Second parameter switches between international and american date formats.
   #
@@ -32,10 +17,7 @@ class Timelord
   #   Timelord.parse("11/01", :american) # "2011-11-01"
   #
   # For more examples, check out the spec[https://github.com/halogenandtoast/timelord/blob/master/spec/timelord_spec.rb]
-  def self.parse(str, format = :international)
-    matchers.
-      map { |matcher| matcher.new(str, format: format, today: today) }.
-      detect(&:matches?).
-      to_date
+  def self.parse(string, options = {})
+    TimeParser.new(string, options).to_date
   end
 end
