@@ -8,7 +8,7 @@ require 'timelord/current_weekday'
 require 'timelord/matcher_loader'
 
 module Timelord
-  VERSION = "0.0.8"
+  VERSION = "0.0.9"
 
   # Parses a date str. Second parameter switches between international and american date formats.
   #
