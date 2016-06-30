@@ -24,7 +24,7 @@ To use the american date format pass in :american as the second parameter
 
 ```ruby
 Timelord.parse("11/01").to_s # "2011-01-11"
-Timelord.parse("11/01", :american) # "2011-11-01"
+Timelord.parse("11/01", format: :american) # "2011-11-01"
 ```
 
 ## In the future
