@@ -128,6 +128,11 @@ describe Timelord, 'parse' do
     Timelord.parse("March 1 I need to do stuff.").should == first_of_march
   end
 
+  it 'parses mm/dd/yy correctly' do
+    oct_12 = Date.civil(2015, 10, 12)
+    Timelord.parse("Stuff 10/12/15", format: :american).should == oct_12
+  end
+
   after do
     Timecop.return
   end
