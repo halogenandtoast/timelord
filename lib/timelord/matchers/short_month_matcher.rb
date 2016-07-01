@@ -1,15 +1,11 @@
 module Timelord
-  class ShortMonthMatcher < Matcher
+  class ShortMonthMatcher < FutureMatcher
     REGEX = /\b(#{SHORT_MATCHER})\b/i
-
-    def to_date
-      future
-    end
 
     private
 
     def parse_date
-      Date.civil(today.year, SHORT_MONTHS.index(match[1].downcase) + 1)
+      Date.civil(today.year, month_by_index(strings[1]))
     end
   end
 end

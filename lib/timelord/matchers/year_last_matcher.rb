@@ -5,20 +5,24 @@ module Timelord
     MILLENIUM_THRESHOLD = 1000
 
     def to_date
-      if format == :american
-        Date.civil(to_year(ints[3]), ints[1], ints[2])
-      else
-        Date.civil(to_year(ints[3]), ints[2], ints[1])
-      end
+      Date.civil(year, month, day)
     end
 
     private
 
-    def to_year(year_number)
-      if year_number < MILLENIUM_THRESHOLD
-        CURRENT_MILLENIUM + year_number
+    def month
+      format == :american ? ints[1] : ints[2]
+    end
+
+    def day
+      format == :american ? ints[2] : ints[1]
+    end
+
+    def year
+      if ints[3] < MILLENIUM_THRESHOLD
+        CURRENT_MILLENIUM + ints[3]
       else
-        year_number
+        ints[3]
       end
     end
   end

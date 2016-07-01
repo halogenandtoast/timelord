@@ -1,10 +1,6 @@
 module Timelord
-  class ShortMonthYearMatcher < Matcher
+  class ShortMonthYearMatcher < FutureMatcher
     REGEX = /\b(#{SHORT_MATCHER})\s+(\d{4})\b/i
-
-    def to_date
-      future
-    end
 
     private
 

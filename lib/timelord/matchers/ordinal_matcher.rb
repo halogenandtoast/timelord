@@ -1,10 +1,6 @@
 module Timelord
-  class OrdinalMatcher < Matcher
+  class OrdinalMatcher < FutureMatcher
     REGEX = /\b(\d{1,2})(#{ORDINAL_MATCHER})\b/i
-
-    def to_date
-      future
-    end
 
     private
 

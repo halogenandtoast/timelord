@@ -1,10 +1,6 @@
 module Timelord
-  class DayNumericMonthMatcher < Matcher
+  class DayNumericMonthMatcher < FutureMatcher
     REGEX = /\b(\d{1,2})\/(\d{1,2})\b/i
-
-    def to_date
-      future
-    end
 
     private
 

@@ -35,10 +35,6 @@ module Timelord
       @match ||= self.class::REGEX.match(string)
     end
 
-    def future
-      Future.new(parse_date).to_date
-    end
-
     def month_by_index(index)
       SHORT_MONTHS.index(index) + 1
     end
