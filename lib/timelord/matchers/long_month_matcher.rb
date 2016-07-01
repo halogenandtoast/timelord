@@ -3,7 +3,7 @@ module Timelord
     REGEX = /\b(#{LONG_MATCHER})\b/i
 
     def to_date
-      Future.new(parse_date).to_date
+      future
     end
 
     private

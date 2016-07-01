@@ -3,13 +3,13 @@ module Timelord
     REGEX = /\b(\d{1,2})(#{ORDINAL_MATCHER})\b/i
 
     def to_date
-      Future.new(parse_date).to_date
+      future
     end
 
     private
 
     def parse_date
-      Date.civil(today.year, today.month, match[1].to_i)
+      Date.civil(today.year, today.month, ints[1])
     end
   end
 end

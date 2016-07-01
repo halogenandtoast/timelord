@@ -3,16 +3,16 @@ module Timelord
     REGEX = /\b(\d{1,2})\/(\d{1,2})\b/i
 
     def to_date
-      Future.new(parse_date).to_date
+      future
     end
 
     private
 
     def parse_date
       if format == :american
-        Date.civil(today.year, match[1].to_i, match[2].to_i)
+        Date.civil(today.year, ints[1], ints[2])
       else
-        Date.civil(today.year, match[2].to_i, match[1].to_i)
+        Date.civil(today.year, ints[2], ints[1])
       end
     end
   end

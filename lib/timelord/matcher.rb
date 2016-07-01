@@ -17,10 +17,30 @@ module Timelord
     end
 
     def matches?
-      @match ||= self.class::REGEX.match(string)
+      match
     end
 
     private
-    attr_reader :string, :match, :format, :today
+    attr_reader :string, :format, :today
+
+    def ints
+      @ints ||= match.to_a.map(&:to_i)
+    end
+
+    def strings
+      @strings ||= match.to_a.map(&:downcase)
+    end
+
+    def match
+      @match ||= self.class::REGEX.match(string)
+    end
+
+    def future
+      Future.new(parse_date).to_date
+    end
+
+    def month_by_index(index)
+      SHORT_MONTHS.index(index) + 1
+    end
   end
 end
